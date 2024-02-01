@@ -16,7 +16,7 @@ export default function ListContainer({ consumeList, setConsumeList, modifying, 
 
     return (
         <section>
-            <div className='flex justify-between items-center w-full h-auto px-1 pb-2' style={{borderBottom: '1px solid var(--grayscale-200)'}}>
+            <div className='flex justify-between items-center w-full h-auto pl-1 pb-2' style={{borderBottom: '1px solid var(--grayscale-200)'}}>
                 <ContainerTitle>지출 상세내역</ContainerTitle>
                 {
                 modifying ? 
