@@ -4,7 +4,7 @@
 - **author** : @ChanLee_KR
 - **detail** : [document shortcut](https://www.notion.so/lc02s/05-CRUD-528704634d3a4d9485e21106a11a6dc7?pvs=4)
 
-![example image](https://www.notion.so/image/https%3A%2F%2Fprod-files-secure.s3.us-west-2.amazonaws.com%2F7945ce06-31b8-485f-a423-8a34ee0101a2%2F945a7875-e4bf-49c5-8a6c-a7dba9b63928%2FUntitled.png?table=block&id=02a62889-9414-4731-bb6e-2ac0f110230e&spaceId=7945ce06-31b8-485f-a423-8a34ee0101a2&width=2000&userId=9ac6e46f-eb3f-4360-ba9b-d2b06414fced&cache=v2)
+![example image](https://www.notion.so/image/https%3A%2F%2Fprod-files-secure.s3.us-west-2.amazonaws.com%2F7945ce06-31b8-485f-a423-8a34ee0101a2%2F05bf57c1-61b2-4657-ae75-1635b36f9e2f%2FUntitled.png?table=block&id=3431a3af-8809-408d-887d-d3f548f98779&spaceId=7945ce06-31b8-485f-a423-8a34ee0101a2&width=2000&userId=9ac6e46f-eb3f-4360-ba9b-d2b06414fced&cache=v2)
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 

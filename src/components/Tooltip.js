@@ -10,6 +10,7 @@ export default function Tooltip({ isVisible, guide, content }) {
     )
 }
 
+// styled components
 const TooltipContainer = styled.p`
     position: absolute; 
     bottom: -32px; 

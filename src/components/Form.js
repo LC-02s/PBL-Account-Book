@@ -1,16 +1,27 @@
-import React, { useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import styled from 'styled-components';
 import Tooltip from './Tooltip';
 
-export default function Form({ consumeList, setConsumeList }) {
+export default function Form({ consumeList, setConsumeList, modifying }) {
+    
 
     const [ title, setTitle ] = useState('');
     const [ cost, setCost ] = useState(0);
     const [ isVisible, setIsVisible ] = useState(false);
     const [ isFocused, setIsFocused ] = useState(false);
 
-    const handleTitleInputChange = (e) => setTitle(e.target.value);
-    const handleCostInputChange = (e) => setCost(e.target.value);
+    const inputRef = useRef();
+
+    useEffect(() => {
+        const handleWindowKeyDown = (e) => {
+            const hotKey = window.navigator.platform.toLowerCase().indexOf('mac') >= 0 ? e.metaKey : e.altKey;
+            if (hotKey && e.key === 'Enter') inputRef.current.focus();
+            else if (e.key === 'Escape') inputRef.current.blur();
+        };
+        window.addEventListener('keydown', handleWindowKeyDown);
+    
+        return () => { window.removeEventListener('keydown', handleWindowKeyDown) };
+    }, []);
 
     const handleIsVisible = () => {
         setIsFocused(true);
@@ -19,8 +30,10 @@ export default function Form({ consumeList, setConsumeList }) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        
-        if (title === '' || cost === '0') return alert(`${title === '' ? '제목' : '비용'}을 입력해주세요`);
+
+        if (modifying) return alert('리스트 수정 상태에서는 [항목 추가]를 진행할 수 없습니다');
+        if (title === '') return alert(`제목을 입력해주세요`);
+        if (Number(cost) <= 0) return alert(`비용을 입력해주세요`);
         
         const newListItem = { id: new Date().getTime(), title: title, cost: Number(cost) };
         setConsumeList([ ...consumeList, newListItem ]); // save list
@@ -35,17 +48,21 @@ export default function Form({ consumeList, setConsumeList }) {
                 <div className='relative'>
                     <FormInputContainer $focused={isFocused}>
                         <input 
+                            ref={inputRef}
                             type='text' 
-                            placeholder='지출 내역을 입력해주세요'
+                            placeholder={modifying ? '수정 중에는 입력할 수 없습니다' : '지출 내역을 입력해주세요'}
                             value={title} 
-                            onChange={handleTitleInputChange} 
+                            disabled={modifying}
+                            onChange={(e) => setTitle(e.target.value)} 
                             onFocus={handleIsVisible} 
                             onBlur={() => {setIsVisible(false); setIsFocused(false)}}
                         />
                         <input 
                             type='number' 
+                            placeholder='비용을 입력해주세요'
                             value={cost} 
-                            onChange={handleCostInputChange} 
+                            disabled={modifying}
+                            onChange={(e) => setCost(Number(e.target.value))} 
                             onFocus={handleIsVisible} 
                             onBlur={() => {setIsVisible(false); setIsFocused(false)}} 
                         />
@@ -58,6 +75,7 @@ export default function Form({ consumeList, setConsumeList }) {
     )
 }
 
+// styled components
 const FormContainer = styled.section`
     display: block; 
     width: 100%; 

@@ -5,23 +5,7 @@ import { Doughnut } from "react-chartjs-2";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-function costSummary(listArr) {
-    return listArr
-        .map((listObj) => +listObj.cost)
-        .reduce((a, b) => a + b);
-}
-
-function costPersentMap(listArr, total) {
-    return listArr
-        .map((listObj) => +listObj.cost)
-        .map((cost) => +(cost / total * 100).toFixed(1));
-}
-
-function formatter(numberCost) {
-    return numberCost.toLocaleString('ko-KR');
-}
-
-export default function Chart({ consumeList, setConsumeList }) {
+export default function Chart({ consumeList, setConsumeList, modifying }) {
 
     const totalCost = useMemo(() => costSummary(consumeList), [ consumeList ]);
     const costDataArr = useMemo(() => costPersentMap(consumeList, totalCost), [ consumeList, totalCost ]);
@@ -29,6 +13,7 @@ export default function Chart({ consumeList, setConsumeList }) {
 
     const handleResetBtnClick = (e) => {
         e.preventDefault();
+        if (modifying) return alert('리스트 수정 상태에서는 [초기화]를 진행할 수 없습니다');
         const confirmTxt = '초기화할 시 모든 지출 내역이 삭제되며, \n다시는 돌이킬 수 없습니다. \n초기화하시겠습니까?'
         if (window.confirm(confirmTxt)) setConsumeList([]);
     }
@@ -69,21 +54,44 @@ export default function Chart({ consumeList, setConsumeList }) {
     };
 
     return (
-        <div>
+        <section>
             <SummaryContainer>
                 <div className='flex justify-between items-center mb-1'>
                     <SummaryTitle>총 지출</SummaryTitle>
-                    <ResetBtn onClick={handleResetBtnClick}>초기화</ResetBtn>
+                    <ResetBtn onClick={handleResetBtnClick}>
+                        <span className='material-icons'>restart_alt</span>
+                        초기화
+                    </ResetBtn>
                 </div>
                 <SummaryTotal>{ formatter(totalCost) }원</SummaryTotal>
             </SummaryContainer>
             <ChartContainer>
                 <Doughnut fallbackContent={<ChartSkeleton />} data={chartData} options={chartPlugins} />
             </ChartContainer>
-        </div>
+        </section>
     )
 }
 
+// chart logic
+function costSummary(listArr) {
+    return listArr
+        .map((listObj) => +listObj.cost)
+        .reduce((a, b) => a + b);
+}
+
+function costPersentMap(listArr, total) {
+    return listArr
+        .map((listObj) => +listObj.cost)
+        .map((cost) => +(cost / total * 100).toFixed(1));
+}
+
+// formatter
+function formatter(numberCost) {
+    return numberCost.toLocaleString('ko-KR');
+}
+
+
+// styled components
 const SummaryContainer = styled.div`
     display: block;
     width: 100%;
@@ -115,13 +123,22 @@ const SummaryTotal = styled.p`
 `;
 
 const ResetBtn = styled.button`
-    display: block;
-    padding: 4px 8px;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+    padding: 4px 12px 4px 8px;
     font-size: 12px;
     font-weight: 500;
     color: var(--brand-white);
     border-radius: 16px;
     background-color: rgba(0, 20, 40, 0.2);
+
+    & > .material-icons {
+        margin-right: 2px;
+        font-size: 16px;
+        color: var(--brand-white);
+    }
 `;
 
 const ChartSkeleton = styled.div`
