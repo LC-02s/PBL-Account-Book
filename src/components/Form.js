@@ -5,19 +5,22 @@ import Tooltip from './Tooltip';
 export default function Form({ consumeList, setConsumeList }) {
 
     const [ title, setTitle ] = useState('');
-    const [ price, setPrice ] = useState(0);
+    const [ cost, setCost ] = useState(0);
     const [ isVisible, setIsVisible ] = useState(false);
 
     const handleTitleInputChange = (e) => setTitle(e.target.value);
-    const handlePriceInputChange = (e) => setPrice(e.target.value);
+    const handleCostInputChange = (e) => setCost(e.target.value);
 
-    const handleIsVisible = () => setIsVisible(consumeList.length === 0? true : false);
+    const handleIsVisible = () => setIsVisible(consumeList.length === 0 && title === '' ? true : false);
 
     const handleSubmit = (e) => {
         e.preventDefault();
         
-        if (title === '' || price === '0') return alert(`${title === '' ? '제목을' : '비용을'} 입력해주세요`);
-        console.log(title, price);
+        if (title === '' || cost === '0') return alert(`${title === '' ? '제목' : '비용'}을 입력해주세요`);
+        
+        const newListItem = { id: new Date().getTime(), title: title, cost: Number(cost) };
+        setConsumeList([ ...consumeList, newListItem ]); // save list
+        setTitle(''); setCost(0); // init value
     }
 
     return (
@@ -26,24 +29,23 @@ export default function Form({ consumeList, setConsumeList }) {
                 <FormTitle>My Account Book</FormTitle>
                 <FormDescription>Enter consumption details to make the list</FormDescription>
                 <div className='relative'>
-                    <div className='flex justify-between items-center w-full h-auto'>
+                    <FormInputContainer>
                         <input 
-                            className='block'
                             type='text' 
+                            placeholder='지출 내역을 입력해주세요'
                             value={title} 
                             onChange={handleTitleInputChange} 
                             onFocus={handleIsVisible} 
                             onBlur={() => setIsVisible(false)} 
                         />
                         <input 
-                            className='block'
                             type='number' 
-                            value={price} 
-                            onChange={handlePriceInputChange} 
+                            value={cost} 
+                            onChange={handleCostInputChange} 
                             onFocus={handleIsVisible} 
                             onBlur={() => setIsVisible(false)} 
                         />
-                    </div>
+                    </FormInputContainer>
                     <HotKeyBadge>⌘↩︎</HotKeyBadge>
                     <Tooltip isVisible={isVisible} guide='Enter' content='리스트 추가' />
                 </div>
@@ -59,7 +61,7 @@ const FormContainer = styled.section`
     padding: 16px; 
     margin: 0px 0px 12px; 
     border: 1px solid var(--grayscale-200); 
-    border-radius: 16px; 
+    border-radius: 12px; 
     background-color: var(--brand-white);
 `;
 
@@ -67,6 +69,7 @@ const FormTitle = styled.h1`
     display: block;
     width: 100%; 
     height: auto; 
+    margin: 0px 0px 4px;
     font-size: 24px; 
     font-weight: 700; 
     color: var(--grayscale-900); 
@@ -84,6 +87,22 @@ const FormDescription = styled.p`
     color: var(--grayscale-500); 
     line-height: 1.4; 
     word-break: keep-all;
+`;
+
+const FormInputContainer = styled.div`
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: auto;
+
+    input: {
+        flex: 1;
+        display: block;
+        width: 100%;
+        height: 48px;
+    }
 `;
 
 const HotKeyBadge = styled.button.attrs({ type: 'submit' })`

@@ -10,7 +10,7 @@ export default function App() {
   const [ consumeList, setConsumeList ] = useState(initialList);
 
   const saveList = useCallback((list) => {
-    console.log(`Save Target: ${list}`);
+    console.log('Save Target:', list);
     setConsumeList(list);
     localStorage.setItem('consumeList', JSON.stringify(list));
   }, []);
@@ -18,7 +18,10 @@ export default function App() {
   return (
     <React.Fragment>
       <Form consumeList={consumeList} setConsumeList={saveList} />
-      <Article consumeList={consumeList} setConsumeList={saveList} />
+      {
+        consumeList.length > 0 ? 
+          <Article consumeList={consumeList} setConsumeList={saveList} /> : ''
+      }
     </React.Fragment>
   );
 }
