@@ -1,25 +1,23 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useCallback, useState } from "react"
+import Form from "./components/Form";
+import Article from "./components/Article";
 
-function App() {
+const getList = localStorage.getItem('consumeList') ?? '[]';
+const initialList = JSON.parse(getList);
+
+export default function App() {
+
+  const [ consumeList, setConsumeList ] = useState(initialList);
+
+  const saveList = useCallback((list) => {
+    setConsumeList(list);
+    localStorage.setItem('consumeList', JSON.stringify(list));
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <React.Fragment>
+      <Form />
+      <Article />
+    </React.Fragment>
   );
 }
-
-export default App;
