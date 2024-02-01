@@ -1,7 +1,8 @@
 import React from 'react'
+import List from './List'
 
-export default function ListContainer() {
+export default function ListContainer({ consumeList, setConsumeList }) {
   return (
-    <div>ListContainer</div>
+    <List consumeList={consumeList} setConsumeList={setConsumeList} />
   )
 }

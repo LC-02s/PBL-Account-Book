@@ -34,4 +34,10 @@ body {
   background-color: var(--grayscale-100);
 }
 
-.area-main {position: relative; display: block; width: 100%; max-width: 800px; height: auto;}
+.area-main {
+  position: relative; 
+  display: block; 
+  width: 100%; 
+  max-width: 800px; 
+  height: auto;
+}
