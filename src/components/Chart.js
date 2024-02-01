@@ -48,6 +48,26 @@ export default function Chart({ consumeList, setConsumeList }) {
         ],
     };
 
+    const chartPlugins = {
+        plugins: {
+            legend: { 
+                labels: { 
+                    usePointStyle: true,
+                    pointStyle: 'rectRounded',
+                    // pointStyleWidth: 16,
+                    // useBorderRadius: true,
+                    // borderRadius: 20,
+                    padding: 12,
+                },
+                display: true,
+                position: 'bottom',
+            },
+            tooltip: {
+                backgroundColor: 'rgba(50, 53, 57, 0.9)'
+            }
+        }
+    };
+
     return (
         <div>
             <SummaryContainer>
@@ -58,7 +78,7 @@ export default function Chart({ consumeList, setConsumeList }) {
                 <SummaryTotal>{ formatter(totalCost) }원</SummaryTotal>
             </SummaryContainer>
             <ChartContainer>
-                <Doughnut fallbackContent={<ChartSkeleton />} data={chartData} />
+                <Doughnut fallbackContent={<ChartSkeleton />} data={chartData} options={chartPlugins} />
             </ChartContainer>
         </div>
     )
@@ -115,7 +135,7 @@ const ChartSkeleton = styled.div`
 const ChartContainer = styled.div`
     display: block;
     width: 100%;
-    padding: 14px;
+    padding: 24px;
     border-radius: 6px;
     border: 1px solid var(--grayscale-100);
 `;
