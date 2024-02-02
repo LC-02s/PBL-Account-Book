@@ -178,7 +178,7 @@ const FormInputContainer = styled.div`
     }
 `;
 
-const FormAlertTxt = styled.p`
+/* const FormAlertTxt = styled.p`
     display: flex;
     flex-flow: row nowrap;
     align-items: center;
@@ -206,4 +206,4 @@ const FormAlertTxt = styled.p`
         60%{background-position:0%  50%, 50% 100%,100%   0%}
         80%{background-position:0%  50%, 50%  50%,100% 100%}
     }
-`;
+`; */
