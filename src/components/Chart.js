@@ -13,7 +13,7 @@ export default function Chart({ consumeList, setConsumeList, modifying, setState
 
     const handleResetBtnClick = (e) => {
         e.preventDefault();
-        if (modifying) { setStateMessage({ message: '리스트 수정 상태에서는 [초기화]를 진행할 수 없습니다', state: 2 }); return }
+        if (modifying) { setStateMessage({ message: '리스트 수정 상태에서는 [초기화]를 진행할 수 없습니다!', state: 1 }); return }
         const confirmTxt = '초기화할 시 모든 지출 내역이 삭제되며, \n다시는 돌이킬 수 없습니다. \n초기화하시겠습니까?'
         if (window.confirm(confirmTxt)) {
             setConsumeList([]);

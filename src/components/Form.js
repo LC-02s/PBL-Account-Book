@@ -30,7 +30,7 @@ export default function Form({ consumeList, setConsumeList, modifying, setStateM
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        if (modifying) { setStateMessage({ message: '리스트 수정 상태에서는 [항목 추가]를 진행할 수 없습니다!', state: 2 }); return } 
+        if (modifying) { setStateMessage({ message: '리스트 수정 상태에서는 [항목 추가]를 진행할 수 없습니다!', state: 1 }); return } 
         else if (title === '') { setStateMessage({ message: '제목을 입력해주세요!', state: 2 }); return } 
         else if (Number(cost) <= 0) { setStateMessage({ message: '비용을 입력해주세요!', state: 2 }); return }
         
