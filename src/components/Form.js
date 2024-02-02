@@ -2,12 +2,11 @@ import React, { useEffect, useRef, useState } from 'react'
 import styled from 'styled-components';
 import Tooltip from './Tooltip';
 
-export default function Form({ consumeList, setConsumeList, modifying }) {
+export default function Form({ consumeList, setConsumeList, modifying, setStateMessage }) {
     
-
     const [ title, setTitle ] = useState('');
     const [ cost, setCost ] = useState(0);
-    const [ isVisible, setIsVisible ] = useState(false);
+    const [ tooltipVisible, setTooltipVisible ] = useState(false);
     const [ isFocused, setIsFocused ] = useState(false);
 
     const inputRef = useRef();
@@ -23,21 +22,22 @@ export default function Form({ consumeList, setConsumeList, modifying }) {
         return () => { window.removeEventListener('keydown', handleWindowKeyDown) };
     }, []);
 
-    const handleIsVisible = () => {
+    const handleInputFocus = () => {
         setIsFocused(true);
-        setIsVisible(consumeList.length === 0 && title === '' ? true : false)
+        setTooltipVisible(consumeList.length === 0 && title === '' ? true : false);
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        if (modifying) return alert('리스트 수정 상태에서는 [항목 추가]를 진행할 수 없습니다');
-        if (title === '') return alert(`제목을 입력해주세요`);
-        if (Number(cost) <= 0) return alert(`비용을 입력해주세요`);
+        if (modifying) { setStateMessage({ message: '리스트 수정 상태에서는 [항목 추가]를 진행할 수 없습니다!', state: 2 }); return } 
+        else if (title === '') { setStateMessage({ message: '제목을 입력해주세요!', state: 2 }); return } 
+        else if (Number(cost) <= 0) { setStateMessage({ message: '비용을 입력해주세요!', state: 2 }); return }
         
         const newListItem = { id: new Date().getTime(), title: title, cost: Number(cost) };
         setConsumeList([ ...consumeList, newListItem ]); // save list
         setTitle(''); setCost(0); // init value
+        setStateMessage({ message: '지출 내역을 생성하였습니다!', state: 0 });
     }
 
     return (
@@ -54,8 +54,8 @@ export default function Form({ consumeList, setConsumeList, modifying }) {
                             value={title} 
                             disabled={modifying}
                             onChange={(e) => setTitle(e.target.value)} 
-                            onFocus={handleIsVisible} 
-                            onBlur={() => {setIsVisible(false); setIsFocused(false)}}
+                            onFocus={handleInputFocus} 
+                            onBlur={() => {setTooltipVisible(false); setIsFocused(false)}}
                         />
                         <input 
                             type='number' 
@@ -63,12 +63,12 @@ export default function Form({ consumeList, setConsumeList, modifying }) {
                             value={cost} 
                             disabled={modifying}
                             onChange={(e) => setCost(Number(e.target.value))} 
-                            onFocus={handleIsVisible} 
-                            onBlur={() => {setIsVisible(false); setIsFocused(false)}} 
+                            onFocus={handleInputFocus} 
+                            onBlur={() => {setTooltipVisible(false); setIsFocused(false)}} 
                         />
                     </FormInputContainer>
                     <HotKeyBadge>⌘↩︎</HotKeyBadge>
-                    <Tooltip isVisible={isVisible} guide='Enter' content='리스트 추가' />
+                    <Tooltip isVisible={tooltipVisible} guide='Enter' content='리스트 추가' />
                 </div>
                 { 
                 /* modifying && 
@@ -178,7 +178,8 @@ const FormInputContainer = styled.div`
     }
 `;
 
-/* const FormAlertTxt = styled.p`
+/* 
+const FormAlertTxt = styled.p`
     display: flex;
     flex-flow: row nowrap;
     align-items: center;
@@ -206,4 +207,5 @@ const FormInputContainer = styled.div`
         60%{background-position:0%  50%, 50% 100%,100%   0%}
         80%{background-position:0%  50%, 50%  50%,100% 100%}
     }
-`; */
+`; 
+*/

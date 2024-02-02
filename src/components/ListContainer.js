@@ -2,9 +2,7 @@ import React, { useEffect, useState } from 'react'
 import List from './List'
 import styled, { css } from 'styled-components'
 
-
-
-export default function ListContainer({ consumeList, setConsumeList, modifying, setModifying }) {
+export default function ListContainer({ consumeList, setConsumeList, modifying, setModifying, setStateMessage }) {
 
     const [ modifyingList, setModifyingList ] = useState([ ...consumeList ]);
 
@@ -12,7 +10,11 @@ export default function ListContainer({ consumeList, setConsumeList, modifying, 
     
     const handleCancelBtnClick = () => { setModifyingList([ ...consumeList ]); setModifying(false); }
 
-    const handleSaveBtnClick = () => { setConsumeList(modifyingList); setModifying(false); }
+    const handleSaveBtnClick = () => { 
+        setConsumeList(modifyingList); 
+        setModifying(false); 
+        setStateMessage({ message: '변경사항이 저장되었습니다!', state: 0 });
+    }
 
     return (
         <section>
