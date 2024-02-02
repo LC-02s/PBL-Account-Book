@@ -50,7 +50,7 @@ export default function Form({ consumeList, setConsumeList, modifying }) {
                         <input 
                             ref={inputRef}
                             type='text' 
-                            placeholder={modifying ? '수정 중에는 입력할 수 없습니다' : '지출 내역을 입력해주세요'}
+                            placeholder={ modifying ? '상세내역 수정 중에는 입력할 수 없습니다' : '지출 내역을 입력해주세요'}
                             value={title} 
                             disabled={modifying}
                             onChange={(e) => setTitle(e.target.value)} 
@@ -70,6 +70,12 @@ export default function Form({ consumeList, setConsumeList, modifying }) {
                     <HotKeyBadge>⌘↩︎</HotKeyBadge>
                     <Tooltip isVisible={isVisible} guide='Enter' content='리스트 추가' />
                 </div>
+                { 
+                /* modifying && 
+                    <FormAlertTxt>
+                        지출내역 수정 중 <span className='modifyingLoader'></span>
+                    </FormAlertTxt> */
+                }
             </form>
         </FormContainer>
     )
@@ -169,5 +175,35 @@ const FormInputContainer = styled.div`
     & > input:last-of-type {width: 240px;}
     & ~ ${HotKeyBadge} {
         ${({ $focused }) => $focused ? 'opacity: 0;' : 'opacity: 1;'}
+    }
+`;
+
+const FormAlertTxt = styled.p`
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    width: 100%;
+    height: auto;
+    padding: 0px 4px;
+    margin: 8px 0px 0px;
+    color: var(--grayscale-600);
+
+    & > .modifyingLoader {
+        width: 20px;
+        margin-left: 4px;
+        aspect-ratio: 2;
+        --arc: no-repeat radial-gradient(circle closest-side, rgba(114,126,132,1) 68%, rgba(114,126,132,0));
+        background: 
+            var(--arc) 0%   50%,
+            var(--arc) 50%  50%,
+            var(--arc) 100% 50%;
+        background-size: calc(100%/3) 50%;
+        animation: modifyingLoader 1s infinite linear;
+    }
+    @keyframes modifyingLoader {
+        20%{background-position:0%   0%, 50%  50%,100%  50%}
+        40%{background-position:0% 100%, 50%   0%,100%  50%}
+        60%{background-position:0%  50%, 50% 100%,100%   0%}
+        80%{background-position:0%  50%, 50%  50%,100% 100%}
     }
 `;

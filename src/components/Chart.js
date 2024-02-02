@@ -63,7 +63,7 @@ export default function Chart({ consumeList, setConsumeList, modifying }) {
                         초기화
                     </ResetBtn>
                 </div>
-                <SummaryTotal>{ formatter(totalCost) }원</SummaryTotal>
+                <SummaryTotal>{ modifying ? <span></span> : formatter(totalCost) }원</SummaryTotal>
             </SummaryContainer>
             <ChartContainer>
                 <Doughnut fallbackContent={<ChartSkeleton />} data={chartData} options={chartPlugins} />
@@ -113,13 +113,31 @@ const SummaryTitle = styled.h2`
 `;
 
 const SummaryTotal = styled.p`
-    display: block;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+    align-items: center;
     width: 100%;
     height: auto;
     font-size: 18px;
     font-weight: 600;
     color: var(--brand-white);
     white-space: nowrap;
+
+    & > span {
+        width: 80px;
+        height: 16px;
+        margin-right: 6px;
+        border-radius: 2px;
+        background: 
+            linear-gradient(90deg,rgba(209,230,255,0.2) 33%,rgba(209,230,255,0.4) 50%,rgba(209,230,255,0.2) 75%)
+            #3B84D8;
+        background-size:360% 100%;
+        animation: totalLoader 1.2s infinite linear;
+    }
+    @keyframes totalLoader {
+        0% {background-position: right}
+    }
 `;
 
 const ResetBtn = styled.button`
