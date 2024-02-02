@@ -42,6 +42,6 @@ const MessageWrapper = styled.section`
         opacity: ${({ $visible }) => $visible ? 1 : 0};
         transform: translateX(${({ $visible }) => $visible ? 0 : 50}%);
         /* visibility: ${({ $visible }) => $visible ? 'visible' : 'hidden'}; */
-        transition: opacity 0.5s, transform 0.3s;
+        transition: background 0.3s, opacity 0.5s, transform 0.3s;
     }
 `;
