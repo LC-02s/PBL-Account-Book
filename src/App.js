@@ -22,11 +22,11 @@ export default function App() {
         <React.Fragment>
             <Form consumeList={consumeList} setConsumeList={saveList} modifying={modifying} />
             {
-            consumeList.length > 0 ? 
+            consumeList.length > 0 && 
                 <AreaArticle>
                     <Chart consumeList={consumeList} setConsumeList={saveList}  modifying={modifying} />
                     <ListContainer consumeList={consumeList} setConsumeList={saveList} modifying={modifying} setModifying={setModifying} />
-                </AreaArticle> : ''
+                </AreaArticle>
             }
         </React.Fragment>
     );
