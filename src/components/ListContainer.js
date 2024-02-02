@@ -20,7 +20,7 @@ export default function ListContainer({ consumeList, setConsumeList, modifying, 
                 <ContainerTitle>지출 상세내역</ContainerTitle>
                 {
                 modifying ? 
-                    <div>
+                    <div className='block w-auto h-auto'>
                         <CommonBtn onClick={handleCancelBtnClick}><span className='material-icons'>cancel</span> 취소하기</CommonBtn>
                         <CommonBtn $save={true} onClick={handleSaveBtnClick}><span className='material-icons'>save</span> 저장하기</CommonBtn>    
                     </div> : 
@@ -28,19 +28,17 @@ export default function ListContainer({ consumeList, setConsumeList, modifying, 
                 }
             </div>
             <div className='block w-full h-auto'>
-                {modifyingList.map((list, idx) => {
-                    return (
-                        <List 
-                            key={list.id} 
-                            index={idx}
-                            title={list.title}
-                            cost={list.cost}
-                            modifying={modifying}
-                            modifyingList={modifyingList}
-                            setModifyingList={setModifyingList}
-                        />
-                    )
-                })}
+                {modifyingList.map((list, idx) => (
+                    <List 
+                        key={list.id} 
+                        index={idx}
+                        title={list.title}
+                        cost={list.cost}
+                        modifying={modifying}
+                        modifyingList={modifyingList}
+                        setModifyingList={setModifyingList}
+                    />
+                ))}
             </div>
         </section>
     )
