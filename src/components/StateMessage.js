@@ -1,12 +1,10 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 
 export default function StateMessage({ stateMessage, stateMessageVisible }) {
     // stateMessage: { message: '', state: 0 } (initalValue)
     // stateMessageVisible: boolean (initalValue)
     const { message, state } = stateMessage;
-
-    useEffect(() => { console.log(stateMessage); }, [stateMessage]);
 
     return (
         <MessageWrapper $colorType={state} $visible={stateMessageVisible}>

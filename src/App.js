@@ -12,13 +12,13 @@ export default function App() {
 
     const [ consumeList, setConsumeList ] = useState(initialList);
     const [ modifying, setModifying ] = useState(false);
-    
+
     const [ stateMessage, setStateMessage ] = useState({ message: '', state: 0 });
     const [ stateMessageVisible, setStateMessageVisible ] = useState(false);
     const [ handleTimeout, setHandleTimeout ] = useState(null);
 
     const saveList = useCallback((list) => {
-        console.log('Save Target:', list);
+        // console.log('Save Target:', list);
         setConsumeList(list);
         localStorage.setItem('consumeList', JSON.stringify(list));
     }, []);
